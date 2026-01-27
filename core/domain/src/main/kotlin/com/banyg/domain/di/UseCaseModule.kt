@@ -1,9 +1,11 @@
 package com.banyg.domain.di
 
 import com.banyg.domain.repository.CategoryRepository
+import com.banyg.domain.repository.TransactionRepository
 import com.banyg.domain.usecase.CreateCategoryUseCase
 import com.banyg.domain.usecase.DeleteCategoryUseCase
 import com.banyg.domain.usecase.GetCategoriesUseCase
+import com.banyg.domain.usecase.ImportCsvTransactionsUseCase
 import com.banyg.domain.usecase.SeedDefaultCategoriesUseCase
 import com.banyg.domain.usecase.UpdateCategoryUseCase
 import dagger.Module
@@ -57,5 +59,13 @@ object UseCaseModule {
         categoryRepository: CategoryRepository
     ): SeedDefaultCategoriesUseCase {
         return SeedDefaultCategoriesUseCase(categoryRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImportCsvTransactionsUseCase(
+        transactionRepository: TransactionRepository
+    ): ImportCsvTransactionsUseCase {
+        return ImportCsvTransactionsUseCase(transactionRepository)
     }
 }

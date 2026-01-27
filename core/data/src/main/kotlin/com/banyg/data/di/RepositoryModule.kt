@@ -1,17 +1,21 @@
 package com.banyg.data.di
 
 import com.banyg.data.local.dao.AccountDao
+import com.banyg.data.local.dao.BudgetDao
 import com.banyg.data.local.dao.CategoryDao
 import com.banyg.data.local.dao.SplitDao
 import com.banyg.data.local.dao.TransactionDao
 import com.banyg.data.mapper.AccountMapper
+import com.banyg.data.mapper.BudgetMapper
 import com.banyg.data.mapper.CategoryMapper
 import com.banyg.data.mapper.SplitMapper
 import com.banyg.data.mapper.TransactionMapper
 import com.banyg.data.repository.AccountRepositoryImpl
+import com.banyg.data.repository.BudgetRepositoryImpl
 import com.banyg.data.repository.CategoryRepositoryImpl
 import com.banyg.data.repository.TransactionRepositoryImpl
 import com.banyg.domain.repository.AccountRepository
+import com.banyg.domain.repository.BudgetRepository
 import com.banyg.domain.repository.CategoryRepository
 import com.banyg.domain.repository.TransactionRepository
 import dagger.Module
@@ -52,5 +56,14 @@ object RepositoryModule {
         splitDao = splitDao,
         transactionMapper = TransactionMapper(SplitMapper()),
         splitMapper = SplitMapper()
+    )
+
+    @Provides
+    @Singleton
+    fun provideBudgetRepository(
+        budgetDao: BudgetDao
+    ): BudgetRepository = BudgetRepositoryImpl(
+        dao = budgetDao,
+        mapper = BudgetMapper()
     )
 }

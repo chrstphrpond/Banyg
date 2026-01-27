@@ -3,6 +3,7 @@ package com.banyg.data.di
 import android.content.Context
 import com.banyg.data.local.BanygDatabase
 import com.banyg.data.local.dao.AccountDao
+import com.banyg.data.local.dao.BudgetDao
 import com.banyg.data.local.dao.CategoryDao
 import com.banyg.data.local.dao.SplitDao
 import com.banyg.data.local.dao.TransactionDao
@@ -34,4 +35,7 @@ object DatabaseModule {
 
     @Provides
     fun provideSplitDao(database: BanygDatabase): SplitDao = database.splitDao()
+
+    @Provides
+    fun provideBudgetDao(database: BanygDatabase): BudgetDao = database.budgetDao()
 }

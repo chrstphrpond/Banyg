@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Budget Screen -->
+    <string name="budget_title">Budget</string>
+    <string name="budget_add_fab">Add budget</string>
+    <string name="budget_add_title">Add Budget</string>
+    <string name="budget_edit_title">Edit Budget</string>
+    
+    <!-- Budget Card -->
+    <string name="budget_spent">Spent</string>
+    <string name="budget_remaining">Remaining</string>
+    <string name="budget_limit">Limit</string>
+    <string name="budget_edit">Edit budget</string>
+    <string name="budget_delete">Delete budget</string>
+    <string name="budget_uncategorized">Uncategorized</string>
+    <string name="budget_over_warning">Over budget!</string>
+    
+    <!-- Summary -->
+    <string name="budget_summary_title">Monthly Overview</string>
+    <string name="budget_total_budgeted">Budgeted</string>
+    <string name="budget_total_spent">Spent</string>
+    <!-- budget_remaining already defined above -->
+    
+    <!-- Empty State -->
+    <string name="budget_empty_title">No budgets yet</string>
+    <string name="budget_empty_description">Set spending limits for your categories to track your progress</string>
+    <string name="budget_empty_no_categories">Create categories first to set up budgets</string>
+    <string name="budget_add_first">Create your first budget</string>
+    
+    <!-- Form -->
+    <string name="budget_amount_label">Budget amount</string>
+    <string name="budget_period_label">Period</string>
+    <string name="select_category">Select category</string>
+    <string name="category">Category</string>
+    
+    <!-- Delete Dialog -->
+    <string name="budget_delete_title">Delete Budget?</string>
+    <string name="budget_delete_message">Are you sure you want to delete the budget for %s?</string>
+    
+    <!-- Common -->
+    <string name="save">Save</string>
+    <string name="saving">Saving…</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="loading">Loading…</string>
+    <string name="retry">Retry</string>
+</resources>

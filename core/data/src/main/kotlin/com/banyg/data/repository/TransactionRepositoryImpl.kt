@@ -130,6 +130,14 @@ class TransactionRepositoryImpl(
         }
     }
 
+    override suspend fun getTransactionsByCategory(categoryId: String): List<Transaction> {
+        val entities = transactionDao.getTransactionsByCategory(categoryId)
+        return entities.map { entity ->
+            val splits = splitDao.getSplitsByTransaction(entity.id)
+            transactionMapper.toDomain(entity, splits)
+        }
+    }
+
     override suspend fun saveTransaction(transaction: Transaction) {
         // Insert transaction
         transactionDao.insert(transactionMapper.toEntity(transaction))

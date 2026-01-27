@@ -5,7 +5,7 @@ minSdk = "24"
 targetSdk = "34"
 
 # Kotlin & Gradle
-agp = "8.2.0"
+agp = "8.13.2"
 kotlin = "1.9.21"
 ksp = "1.9.21-1.0.15"
 
@@ -15,7 +15,7 @@ lifecycleRuntimeKtx = "2.6.2"
 activityCompose = "1.8.1"
 
 # Compose
-composeBom = "2024.01.00"
+composeBom = "2025.01.00"
 
 # Dependency Injection
 hilt = "2.48.1"
@@ -26,6 +26,20 @@ room = "2.6.1"
 
 # DataStore
 datastore = "1.0.0"
+desugar = "2.0.4"
+
+# CSV Import
+commons-csv = "1.10.0"
+
+# Date/Time
+kotlinx-datetime = "0.5.0"
+
+# Animations
+lottie = "6.3.0"
+accompanist = "0.34.0"
+
+# Security
+security-crypto = "1.1.0-alpha06"
 
 # Coroutines
 coroutines = "1.7.3"
@@ -41,6 +55,7 @@ mockk = "1.13.8"
 truth = "1.2.0"
 coroutinesTest = "1.7.3"
 turbine = "1.0.0"
+robolectric = "4.11.1"
 
 [libraries]
 # Core Android
@@ -60,6 +75,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 # Hilt
+hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -72,6 +88,9 @@ room-testing = { group = "androidx.room", name = "room-testing", version.ref = "
 
 # DataStore
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
+# Desugaring
+desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar" }
 
 # Coroutines
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -92,6 +111,20 @@ truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+
+# CSV
+commons-csv = { group = "org.apache.commons", name = "commons-csv", version.ref = "commons-csv" }
+
+# Date/Time
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# Animation
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
+accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist" }
+
+# Security
+security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

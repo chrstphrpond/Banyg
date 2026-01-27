@@ -5,7 +5,6 @@ import com.banyg.domain.repository.CategoryRepository
 import com.banyg.domain.repository.TransactionRepository
 import com.banyg.domain.usecase.AddManualTransactionUseCase
 import com.banyg.domain.usecase.CreateAccountUseCase
-import com.banyg.domain.usecase.SeedDefaultCategoriesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,9 +31,5 @@ object UseCaseModule {
         accountRepository = accountRepository
     )
 
-    @Provides
-    @Singleton
-    fun provideSeedDefaultCategoriesUseCase(
-        categoryRepository: CategoryRepository
-    ): SeedDefaultCategoriesUseCase = SeedDefaultCategoriesUseCase(categoryRepository)
+
 }

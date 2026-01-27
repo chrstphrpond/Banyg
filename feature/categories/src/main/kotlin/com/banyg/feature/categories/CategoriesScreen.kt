@@ -523,6 +523,7 @@ private fun CategoriesError(
     }
 }
 
+@Composable
 private fun parseColor(colorHex: String): Color {
     return try {
         Color(android.graphics.Color.parseColor(colorHex))
@@ -579,28 +580,32 @@ private fun CategoriesSuccessPreview() {
                         name = "Groceries",
                         groupId = CategoryGroups.FOOD,
                         groupName = "Food",
-                        color = "#FF9800"
+                        color = "#FF9800",
+                        icon = null
                     ),
                     Category(
                         id = "2",
                         name = "Dining Out",
                         groupId = CategoryGroups.FOOD,
                         groupName = "Food",
-                        color = "#FF9800"
+                        color = "#FF9800",
+                        icon = null
                     ),
                     Category(
                         id = "3",
                         name = "Fuel",
                         groupId = CategoryGroups.TRANSPORTATION,
                         groupName = "Transportation",
-                        color = "#2196F3"
+                        color = "#2196F3",
+                        icon = null
                     ),
                     Category(
                         id = "4",
                         name = "Salary",
                         groupId = CategoryGroups.INCOME,
                         groupName = "Income",
-                        color = "#4CAF50"
+                        color = "#4CAF50",
+                        icon = null
                     )
                 ),
                 groupedCategories = mapOf(
@@ -610,14 +615,16 @@ private fun CategoriesSuccessPreview() {
                             name = "Groceries",
                             groupId = CategoryGroups.FOOD,
                             groupName = "Food",
-                            color = "#FF9800"
+                            color = "#FF9800",
+                            icon = null
                         ),
                         Category(
                             id = "2",
                             name = "Dining Out",
                             groupId = CategoryGroups.FOOD,
                             groupName = "Food",
-                            color = "#FF9800"
+                            color = "#FF9800",
+                            icon = null
                         )
                     ),
                     "Transportation" to listOf(
@@ -626,7 +633,8 @@ private fun CategoriesSuccessPreview() {
                             name = "Fuel",
                             groupId = CategoryGroups.TRANSPORTATION,
                             groupName = "Transportation",
-                            color = "#2196F3"
+                            color = "#2196F3",
+                            icon = null
                         )
                     ),
                     "Income" to listOf(
@@ -635,7 +643,8 @@ private fun CategoriesSuccessPreview() {
                             name = "Salary",
                             groupId = CategoryGroups.INCOME,
                             groupName = "Income",
-                            color = "#4CAF50"
+                            color = "#4CAF50",
+                            icon = null
                         )
                     )
                 ),

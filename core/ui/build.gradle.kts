@@ -60,6 +60,10 @@ dependencies {
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.material.icons.extended)
 
+    // Animations
+    api(libs.lottie.compose)
+    api(libs.accompanist.swiperefresh)
+
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.truth)

@@ -528,6 +528,7 @@ private fun IconPicker(
     }
 }
 
+@Composable
 private fun parseColor(colorHex: String): Color {
     return try {
         Color(android.graphics.Color.parseColor(colorHex))
@@ -568,11 +569,13 @@ private fun CategoryFormEditPreview() {
                     name = "Groceries",
                     groupId = CategoryGroups.FOOD,
                     groupName = "Food",
-                    color = "#FF9800"
+                    color = "#FF9800",
+                    icon = null
                 ),
                 name = "Groceries",
                 groupId = CategoryGroups.FOOD,
                 groupName = "Food",
+                icon = null,
                 color = "#FF9800",
                 isHidden = false
             ),

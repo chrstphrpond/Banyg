@@ -41,14 +41,14 @@ class AppSeeder @Inject constructor(
                 val result = seedDefaultCategoriesUseCase()
 
                 result.fold(
-                    onSuccess = { count ->
+                    onSuccess = { success ->
                         when {
-                            count > 0 -> Log.i(TAG, "Seeded $count default categories")
+                            success.created > 0 -> Log.i(TAG, "Seeded ${success.created} default categories")
                             else -> Log.d(TAG, "Categories already seeded, skipping")
                         }
                     },
                     onFailure = { error ->
-                        Log.e(TAG, "Failed to seed categories", error)
+                        Log.e(TAG, "Failed to seed categories: ${error.message}")
                     }
                 )
 

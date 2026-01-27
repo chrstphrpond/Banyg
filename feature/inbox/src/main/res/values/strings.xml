@@ -13,4 +13,5 @@
     <string name="transaction_dismiss">Dismiss</string>
     <string name="transaction_uncategorized">Uncategorized</string>
     <string name="transaction_count">%d pending</string>
+    <string name="inbox_import_csv">Import CSV</string>
 </resources>

@@ -5,20 +5,24 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.banyg.data.local.dao.AccountDao
+import com.banyg.data.local.dao.BudgetDao
 import com.banyg.data.local.dao.CategoryDao
 import com.banyg.data.local.dao.SplitDao
 import com.banyg.data.local.dao.TransactionDao
 import com.banyg.data.local.entity.AccountEntity
+import com.banyg.data.local.entity.BudgetEntity
 import com.banyg.data.local.entity.CategoryEntity
 import com.banyg.data.local.entity.SplitEntity
 import com.banyg.data.local.entity.TransactionEntity
 import com.banyg.data.local.migration.MIGRATION_0_1
+import com.banyg.data.local.migration.MIGRATION_1_2
+import com.banyg.data.local.migration.MigrationBackupCallback
 
 /**
  * Banyg Room Database
  *
  * Local-first finance database with offline support.
- * Version 1: Initial schema with accounts, categories, transactions, splits.
+ * Version 2: Added budgets table for envelope-style budgeting.
  *
  * CRITICAL: All money columns use INTEGER (Long), never REAL/FLOAT.
  */
@@ -27,9 +31,10 @@ import com.banyg.data.local.migration.MIGRATION_0_1
         AccountEntity::class,
         CategoryEntity::class,
         TransactionEntity::class,
-        SplitEntity::class
+        SplitEntity::class,
+        BudgetEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class BanygDatabase : RoomDatabase() {
@@ -38,6 +43,7 @@ abstract class BanygDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun transactionDao(): TransactionDao
     abstract fun splitDao(): SplitDao
+    abstract fun budgetDao(): BudgetDao
 
     companion object {
         private const val DATABASE_NAME = "banyg_database"
@@ -56,6 +62,13 @@ abstract class BanygDatabase : RoomDatabase() {
 
         /**
          * Build database with migrations
+         *
+         * IMPORTANT: fallbackToDestructiveMigration() is NOT enabled to prevent
+         * catastrophic data loss. If a migration fails, the app will crash rather
+         * than silently delete all user financial data. This is the correct behavior
+         * for a personal finance app.
+         *
+         * Automatic backups are created before migrations via MigrationBackupCallback.
          */
         private fun buildDatabase(context: Context): BanygDatabase {
             return Room.databaseBuilder(
@@ -64,15 +77,23 @@ abstract class BanygDatabase : RoomDatabase() {
                 DATABASE_NAME
             )
                 .addMigrations(
-                    MIGRATION_0_1
+                    MIGRATION_0_1,
+                    MIGRATION_1_2
                 )
-                .fallbackToDestructiveMigration() // For development only - remove in production
+                .addCallback(MigrationBackupCallback(context.applicationContext))
                 .build()
         }
 
         /**
          * Build database with seeding callback.
          * Alternative entry point when seeding via callback is preferred.
+         *
+         * IMPORTANT: fallbackToDestructiveMigration() is NOT enabled to prevent
+         * catastrophic data loss. If a migration fails, the app will crash rather
+         * than silently delete all user financial data. This is the correct behavior
+         * for a personal finance app.
+         *
+         * Automatic backups are created before migrations via MigrationBackupCallback.
          */
         fun buildDatabaseWithCallback(context: Context): BanygDatabase {
             return Room.databaseBuilder(
@@ -80,9 +101,9 @@ abstract class BanygDatabase : RoomDatabase() {
                 BanygDatabase::class.java,
                 DATABASE_NAME
             )
-                .addMigrations(MIGRATION_0_1)
+                .addMigrations(MIGRATION_0_1, MIGRATION_1_2)
+                .addCallback(MigrationBackupCallback(context.applicationContext))
                 .addCallback(BanygDatabaseCallback())
-                .fallbackToDestructiveMigration()
                 .build()
         }
 

@@ -39,4 +39,5 @@ sealed interface InboxUiEvent {
     data class OnDismiss(val transactionId: String) : InboxUiEvent
     data object OnRefresh : InboxUiEvent
     data object OnRetry : InboxUiEvent
+    data object OnImportCsv : InboxUiEvent
 }

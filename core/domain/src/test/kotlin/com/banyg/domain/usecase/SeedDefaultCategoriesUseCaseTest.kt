@@ -4,6 +4,7 @@ import com.banyg.domain.model.Category
 import com.banyg.domain.model.CategoryGroups
 import com.banyg.domain.repository.CategoryRepository
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +19,7 @@ class SeedDefaultCategoriesUseCaseTest {
     @Test
     fun `invoke with empty database should create all default categories`() = runTest {
         // Given
-        every { categoryRepository.getAllCategories() } returns emptyList()
+        coEvery { categoryRepository.getAllCategories() } returns emptyList()
 
         // When
         val result = useCase()
@@ -38,7 +39,7 @@ class SeedDefaultCategoriesUseCaseTest {
             Category(id = "1", name = "Salary", groupId = CategoryGroups.INCOME),
             Category(id = "2", name = "Groceries", groupId = CategoryGroups.FOOD)
         )
-        every { categoryRepository.getAllCategories() } returns existingCategories
+        coEvery { categoryRepository.getAllCategories() } returns existingCategories
 
         // When
         val result = useCase()
@@ -54,7 +55,7 @@ class SeedDefaultCategoriesUseCaseTest {
     fun `invoke with all existing categories should skip all`() = runTest {
         // Given - all default categories already exist
         val existingCategories = useCase.getDefaultCategories()
-        every { categoryRepository.getAllCategories() } returns existingCategories
+        coEvery { categoryRepository.getAllCategories() } returns existingCategories
 
         // When
         val result = useCase()
@@ -73,7 +74,7 @@ class SeedDefaultCategoriesUseCaseTest {
             Category(id = "1", name = "SALARY", groupId = CategoryGroups.INCOME),
             Category(id = "2", name = "groceries", groupId = CategoryGroups.FOOD)
         )
-        every { categoryRepository.getAllCategories() } returns existingCategories
+        coEvery { categoryRepository.getAllCategories() } returns existingCategories
 
         // When
         val result = useCase()
@@ -111,7 +112,7 @@ class SeedDefaultCategoriesUseCaseTest {
     @Test
     fun `invoke when repository throws should return error`() = runTest {
         // Given
-        every { categoryRepository.getAllCategories() } throws RuntimeException("DB Error")
+        coEvery { categoryRepository.getAllCategories() } throws RuntimeException("DB Error")
 
         // When
         val result = useCase()

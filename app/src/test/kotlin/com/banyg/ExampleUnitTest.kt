@@ -9,6 +9,6 @@ import org.junit.Test
 class ExampleUnitTest {
     @Test
     fun `addition is correct`() {
-        assertThat(2 + 2).isEqualTo(4)
+        assertThat(2 + 2 == 4).isTrue()
     }
 }

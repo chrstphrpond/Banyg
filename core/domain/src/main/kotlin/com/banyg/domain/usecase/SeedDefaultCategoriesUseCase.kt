@@ -19,6 +19,14 @@ class SeedDefaultCategoriesUseCase(
     sealed class Result {
         data class Success(val created: Int, val skipped: Int) : Result()
         data class Error(val message: String) : Result()
+        
+        fun <R> fold(
+            onSuccess: (Success) -> R,
+            onFailure: (Error) -> R
+        ): R = when (this) {
+            is Success -> onSuccess(this)
+            is Error -> onFailure(this)
+        }
     }
 
     /**

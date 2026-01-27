@@ -69,6 +69,11 @@ interface TransactionRepository {
     suspend fun getTransactionsByAccount(accountId: String): List<Transaction>
 
     /**
+     * Get transactions by category (one-shot)
+     */
+    suspend fun getTransactionsByCategory(categoryId: String): List<Transaction>
+
+    /**
      * Save transaction (insert or update)
      * Handles splits if transaction has them
      */

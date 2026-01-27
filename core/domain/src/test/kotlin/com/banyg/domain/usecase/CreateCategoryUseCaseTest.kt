@@ -18,7 +18,7 @@ class CreateCategoryUseCaseTest {
     @Test
     fun `invoke with valid name should create category`() = runTest {
         // Given
-        every { categoryRepository.getAllCategories() } returns emptyList()
+        coEvery { categoryRepository.getAllCategories() } returns emptyList()
 
         // When
         val result = useCase(name = "Food")
@@ -69,7 +69,7 @@ class CreateCategoryUseCaseTest {
     fun `invoke with duplicate name in same group should return error`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Food", groupId = "group1")
-        every { categoryRepository.getAllCategories() } returns listOf(existingCategory)
+        coEvery { categoryRepository.getAllCategories() } returns listOf(existingCategory)
 
         // When
         val result = useCase(name = "Food", groupId = "group1")
@@ -84,7 +84,7 @@ class CreateCategoryUseCaseTest {
     fun `invoke with duplicate name but different group should succeed`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Food", groupId = "group1")
-        every { categoryRepository.getAllCategories() } returns listOf(existingCategory)
+        coEvery { categoryRepository.getAllCategories() } returns listOf(existingCategory)
 
         // When
         val result = useCase(name = "Food", groupId = "group2")
@@ -96,7 +96,7 @@ class CreateCategoryUseCaseTest {
     @Test
     fun `invoke should trim name`() = runTest {
         // Given
-        every { categoryRepository.getAllCategories() } returns emptyList()
+        coEvery { categoryRepository.getAllCategories() } returns emptyList()
 
         // When
         val result = useCase(name = "  Food  ")
@@ -110,7 +110,7 @@ class CreateCategoryUseCaseTest {
     @Test
     fun `invoke should save category with all properties`() = runTest {
         // Given
-        every { categoryRepository.getAllCategories() } returns emptyList()
+        coEvery { categoryRepository.getAllCategories() } returns emptyList()
 
         // When
         val result = useCase(
@@ -134,7 +134,7 @@ class CreateCategoryUseCaseTest {
     @Test
     fun `invoke when repository throws should return error`() = runTest {
         // Given
-        every { categoryRepository.getAllCategories() } returns emptyList()
+        coEvery { categoryRepository.getAllCategories() } returns emptyList()
         coEvery { categoryRepository.saveCategory(any()) } throws RuntimeException("DB Error")
 
         // When

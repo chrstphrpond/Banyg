@@ -74,6 +74,12 @@ interface TransactionDao {
     suspend fun getTransactionsByAccount(accountId: String): List<TransactionEntity>
 
     /**
+     * Get transactions by category (one-shot)
+     */
+    @Query("SELECT * FROM transactions WHERE category_id = :categoryId ORDER BY date DESC")
+    suspend fun getTransactionsByCategory(categoryId: String): List<TransactionEntity>
+
+    /**
      * Insert transaction
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)

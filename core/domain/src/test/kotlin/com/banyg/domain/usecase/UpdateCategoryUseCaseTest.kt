@@ -19,8 +19,8 @@ class UpdateCategoryUseCaseTest {
     fun `invoke with valid update should succeed`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Old Name", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns existingCategory
-        every { categoryRepository.getAllCategories() } returns listOf(existingCategory)
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getAllCategories() } returns listOf(existingCategory)
 
         // When
         val result = useCase(id = "1", name = "New Name")
@@ -35,7 +35,7 @@ class UpdateCategoryUseCaseTest {
     @Test
     fun `invoke with nonexistent category should return error`() = runTest {
         // Given
-        every { categoryRepository.getCategory("1") } returns null
+        coEvery { categoryRepository.getCategory("1") } returns null
 
         // When
         val result = useCase(id = "1", name = "New Name")
@@ -50,7 +50,7 @@ class UpdateCategoryUseCaseTest {
     fun `invoke with blank name should return error`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Old Name", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
 
         // When
         val result = useCase(id = "1", name = "   ")
@@ -65,7 +65,7 @@ class UpdateCategoryUseCaseTest {
     fun `invoke with name too long should return error`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Old Name", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
         val longName = "A".repeat(51)
 
         // When
@@ -80,8 +80,8 @@ class UpdateCategoryUseCaseTest {
         // Given
         val existingCategory = Category(id = "1", name = "Food", groupId = "group1")
         val otherCategory = Category(id = "2", name = "Snacks", groupId = "group1")
-        every { categoryRepository.getCategory("1") } returns existingCategory
-        every { categoryRepository.getAllCategories() } returns listOf(existingCategory, otherCategory)
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getAllCategories() } returns listOf(existingCategory, otherCategory)
 
         // When - try to rename category 1 to "Snacks" which is the name of category 2
         val result = useCase(id = "1", name = "Snacks")
@@ -104,8 +104,8 @@ class UpdateCategoryUseCaseTest {
             color = "#FF0000",
             isHidden = false
         )
-        every { categoryRepository.getCategory("1") } returns existingCategory
-        every { categoryRepository.getAllCategories() } returns listOf(existingCategory)
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getAllCategories() } returns listOf(existingCategory)
 
         // When - only update name
         val result = useCase(id = "1", name = "Updated Food")
@@ -131,8 +131,8 @@ class UpdateCategoryUseCaseTest {
             color = "#000000",
             isHidden = false
         )
-        every { categoryRepository.getCategory("1") } returns existingCategory
-        every { categoryRepository.getAllCategories() } returns listOf(existingCategory)
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getAllCategories() } returns listOf(existingCategory)
 
         // When
         val result = useCase(
@@ -160,8 +160,8 @@ class UpdateCategoryUseCaseTest {
     fun `invoke when repository throws should return error`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Old Name", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns existingCategory
-        every { categoryRepository.getAllCategories() } returns listOf(existingCategory)
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getAllCategories() } returns listOf(existingCategory)
         coEvery { categoryRepository.saveCategory(any()) } throws RuntimeException("DB Error")
 
         // When

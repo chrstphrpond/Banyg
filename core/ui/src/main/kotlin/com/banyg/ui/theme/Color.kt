@@ -112,13 +112,13 @@ object BanygGradients {
      * Custom vertical gradient
      */
     fun customVertical(
-        vararg colors: Color
-    ) = Brush.verticalGradient(colors = colors.toList())
+        colors: List<Color>
+    ) = Brush.verticalGradient(colors = colors)
 
     /**
      * Custom horizontal gradient
      */
     fun customHorizontal(
-        vararg colors: Color
-    ) = Brush.horizontalGradient(colors = colors.toList())
+        colors: List<Color>
+    ) = Brush.horizontalGradient(colors = colors)
 }

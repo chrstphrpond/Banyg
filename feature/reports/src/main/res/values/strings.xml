@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Reports Screen -->
+    <string name="reports_title">Reports</string>
+    <string name="reports_export">Export report</string>
+    
+    <!-- Period Selector -->
+    <string name="period_weekly">Weekly</string>
+    <string name="period_monthly">Monthly</string>
+    <string name="period_quarterly">Quarterly</string>
+    <string name="period_yearly">Yearly</string>
+    
+    <!-- Summary -->
+    <string name="reports_total_income">Total Income</string>
+    <string name="reports_total_spending">Total Spending</string>
+    <string name="reports_net">Net</string>
+    
+    <!-- Breakdown -->
+    <string name="reports_breakdown_title">Spending by Category</string>
+    <string name="reports_transaction_count">%d transactions</string>
+    
+    <!-- Empty State -->
+    <string name="reports_empty_title">No spending data</string>
+    <string name="reports_empty_description">Transactions will appear here once you start tracking expenses</string>
+    
+    <!-- Common -->
+    <string name="loading">Loading…</string>
+    <string name="retry">Retry</string>
+</resources>

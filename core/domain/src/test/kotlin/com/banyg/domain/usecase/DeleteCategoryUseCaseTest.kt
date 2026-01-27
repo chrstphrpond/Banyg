@@ -19,7 +19,7 @@ class DeleteCategoryUseCaseTest {
     fun `invoke with soft delete should hide category`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Food", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
 
         // When
         val result = useCase(id = "1", hardDelete = false)
@@ -33,7 +33,7 @@ class DeleteCategoryUseCaseTest {
     fun `invoke with hard delete should delete category`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Food", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
 
         // When
         val result = useCase(id = "1", hardDelete = true)
@@ -46,7 +46,7 @@ class DeleteCategoryUseCaseTest {
     @Test
     fun `invoke with nonexistent category should return error`() = runTest {
         // Given
-        every { categoryRepository.getCategory("1") } returns null
+        coEvery { categoryRepository.getCategory("1") } returns null
 
         // When
         val result = useCase(id = "1")
@@ -61,7 +61,7 @@ class DeleteCategoryUseCaseTest {
     fun `restore hidden category should succeed`() = runTest {
         // Given
         val hiddenCategory = Category(id = "1", name = "Food", isHidden = true)
-        every { categoryRepository.getCategory("1") } returns hiddenCategory
+        coEvery { categoryRepository.getCategory("1") } returns hiddenCategory
 
         // When
         val result = useCase.restore("1")
@@ -75,7 +75,7 @@ class DeleteCategoryUseCaseTest {
     fun `restore visible category should return error`() = runTest {
         // Given
         val visibleCategory = Category(id = "1", name = "Food", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns visibleCategory
+        coEvery { categoryRepository.getCategory("1") } returns visibleCategory
 
         // When
         val result = useCase.restore("1")
@@ -90,7 +90,7 @@ class DeleteCategoryUseCaseTest {
     fun `toggleHidden on visible category should hide it`() = runTest {
         // Given
         val visibleCategory = Category(id = "1", name = "Food", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns visibleCategory
+        coEvery { categoryRepository.getCategory("1") } returns visibleCategory
 
         // When
         val result = useCase.toggleHidden("1")
@@ -104,7 +104,7 @@ class DeleteCategoryUseCaseTest {
     fun `toggleHidden on hidden category should show it`() = runTest {
         // Given
         val hiddenCategory = Category(id = "1", name = "Food", isHidden = true)
-        every { categoryRepository.getCategory("1") } returns hiddenCategory
+        coEvery { categoryRepository.getCategory("1") } returns hiddenCategory
 
         // When
         val result = useCase.toggleHidden("1")
@@ -118,7 +118,7 @@ class DeleteCategoryUseCaseTest {
     fun `invoke when setHidden throws should return error`() = runTest {
         // Given
         val existingCategory = Category(id = "1", name = "Food", isHidden = false)
-        every { categoryRepository.getCategory("1") } returns existingCategory
+        coEvery { categoryRepository.getCategory("1") } returns existingCategory
         coEvery { categoryRepository.setHidden(any(), any()) } throws RuntimeException("DB Error")
 
         // When

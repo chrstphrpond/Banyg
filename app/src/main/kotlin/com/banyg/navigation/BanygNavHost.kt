@@ -12,6 +12,8 @@ import com.banyg.feature.accounts.navigation.navigateToAccountRegister
 import com.banyg.feature.accounts.navigation.navigateToAddTransaction
 import com.banyg.feature.budget.navigation.BUDGET_ROUTE
 import com.banyg.feature.budget.navigation.budgetScreen
+import com.banyg.feature.csvimport.navigation.csvImportScreen
+import com.banyg.feature.csvimport.navigation.navigateToCsvImport
 import com.banyg.feature.inbox.navigation.INBOX_ROUTE
 import com.banyg.feature.inbox.navigation.inboxScreen
 import com.banyg.feature.reports.navigation.REPORTS_ROUTE
@@ -35,7 +37,13 @@ fun BanygNavHost(
         inboxScreen(
             onNavigateToTransactionDetail = { transactionId ->
                 // TODO: Navigate to transaction detail screen when implemented
-            }
+            },
+            onNavigateToCsvImport = { navController.navigateToCsvImport() }
+        )
+
+        // CSV Import feature
+        csvImportScreen(
+            onNavigateBack = { navController.popBackStack() }
         )
 
         // Accounts feature with nested navigation

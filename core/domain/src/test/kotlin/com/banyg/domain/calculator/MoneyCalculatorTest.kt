@@ -549,4 +549,135 @@ class MoneyCalculatorTest {
             MoneyCalculator.sum(amounts)
         }
     }
+
+    // ========================================
+    // Overflow Protection Tests
+    // ========================================
+    // Comprehensive tests to ensure arithmetic operations throw ArithmeticException
+    // on overflow instead of silently corrupting financial data
+
+    @Test
+    fun `add throws ArithmeticException on negative overflow`() {
+        val a = Money(Long.MIN_VALUE, php)
+        val b = Money(-1L, php)
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.add(a, b)
+        }
+    }
+
+    @Test
+    fun `subtract throws ArithmeticException on positive overflow`() {
+        val a = Money(Long.MAX_VALUE, php)
+        val b = Money(-1L, php)
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.subtract(a, b)
+        }
+    }
+
+    @Test
+    fun `subtract throws ArithmeticException on negative underflow`() {
+        val a = Money(Long.MIN_VALUE, php)
+        val b = Money(Long.MAX_VALUE, php)
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.subtract(a, b)
+        }
+    }
+
+    @Test
+    fun `multiply with Long factor throws ArithmeticException on positive overflow`() {
+        val money = Money(Long.MAX_VALUE / 2 + 1, php)
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.multiply(money, 2L)
+        }
+    }
+
+    @Test
+    fun `multiply with negative factor throws ArithmeticException on negative overflow`() {
+        val money = Money(Long.MIN_VALUE / 2 - 1, php)
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.multiply(money, 2L)
+        }
+    }
+
+    @Test
+    fun `multiply with large factor throws ArithmeticException on overflow`() {
+        val money = Money(Long.MAX_VALUE / 10, php)
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.multiply(money, 11L)
+        }
+    }
+
+    @Test
+    fun `sum throws ArithmeticException on overflow with multiple items`() {
+        val amounts = listOf(
+            Money(Long.MAX_VALUE / 2, php),
+            Money(Long.MAX_VALUE / 2, php),
+            Money(Long.MAX_VALUE / 2, php)
+        )
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.sum(amounts)
+        }
+    }
+
+    @Test
+    fun `sum throws ArithmeticException on negative overflow`() {
+        val amounts = listOf(
+            Money(Long.MIN_VALUE / 2, php),
+            Money(Long.MIN_VALUE / 2, php),
+            Money(Long.MIN_VALUE / 2, php)
+        )
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.sum(amounts)
+        }
+    }
+
+    @Test
+    fun `validateSplits throws ArithmeticException on overflow during sum`() {
+        val total = Money(100L, php)
+        val splits = listOf(
+            Money(Long.MAX_VALUE, php),
+            Money(1L, php)
+        )
+
+        assertThrows(ArithmeticException::class.java) {
+            MoneyCalculator.validateSplits(total, splits)
+        }
+    }
+
+    @Test
+    fun `add at boundary does not overflow`() {
+        // Test that we can add at the edge without overflow
+        val a = Money(Long.MAX_VALUE - 1, php)
+        val b = Money(1L, php)
+        val result = MoneyCalculator.add(a, b)
+
+        assertEquals(Long.MAX_VALUE, result.minorUnits)
+    }
+
+    @Test
+    fun `subtract at boundary does not overflow`() {
+        // Test that we can subtract at the edge without overflow
+        val a = Money(Long.MIN_VALUE + 1, php)
+        val b = Money(1L, php)
+        val result = MoneyCalculator.subtract(a, b)
+
+        assertEquals(Long.MIN_VALUE, result.minorUnits)
+    }
+
+    @Test
+    fun `multiply at boundary does not overflow`() {
+        // Test that we can multiply at the edge without overflow
+        val money = Money(Long.MAX_VALUE / 2, php)
+        val result = MoneyCalculator.multiply(money, 2L)
+
+        assertEquals(Long.MAX_VALUE - 1, result.minorUnits) // Due to truncation
+    }
 }

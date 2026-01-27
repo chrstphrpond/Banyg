@@ -12,11 +12,13 @@ fun NavController.navigateToInbox() {
 }
 
 fun NavGraphBuilder.inboxScreen(
-    onNavigateToTransactionDetail: (String) -> Unit
+    onNavigateToTransactionDetail: (String) -> Unit,
+    onNavigateToCsvImport: () -> Unit
 ) {
     composable(route = INBOX_ROUTE) {
         InboxRoute(
-            onNavigateToTransactionDetail = onNavigateToTransactionDetail
+            onNavigateToTransactionDetail = onNavigateToTransactionDetail,
+            onNavigateToCsvImport = onNavigateToCsvImport
         )
     }
 }

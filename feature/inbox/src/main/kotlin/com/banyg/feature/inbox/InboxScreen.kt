@@ -1,6 +1,7 @@
 package com.banyg.feature.inbox
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
@@ -36,10 +38,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberSwipeToDismissBoxState
-import androidx.compose.material3.pullrefresh.PullRefreshIndicator
-import androidx.compose.material3.pullrefresh.pullRefresh
-import androidx.compose.material3.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,6 +71,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun InboxRoute(
     onNavigateToTransactionDetail: (String) -> Unit,
+    onNavigateToCsvImport: () -> Unit,
     viewModel: InboxViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -76,7 +79,8 @@ fun InboxRoute(
     InboxScreen(
         uiState = uiState,
         onEvent = viewModel::onEvent,
-        onNavigateToTransactionDetail = onNavigateToTransactionDetail
+        onNavigateToTransactionDetail = onNavigateToTransactionDetail,
+        onNavigateToCsvImport = onNavigateToCsvImport
     )
 }
 
@@ -86,6 +90,7 @@ private fun InboxScreen(
     uiState: InboxUiState,
     onEvent: (InboxUiEvent) -> Unit,
     onNavigateToTransactionDetail: (String) -> Unit,
+    onNavigateToCsvImport: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -103,7 +108,16 @@ private fun InboxScreen(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = BanygTheme.colors.backgroundDark,
                     titleContentColor = BanygTheme.colors.textPrimary
-                )
+                ),
+                actions = {
+                    IconButton(onClick = onNavigateToCsvImport) {
+                        Icon(
+                            imageVector = Icons.Default.FileUpload,
+                            contentDescription = stringResource(R.string.inbox_import_csv),
+                            tint = BanygTheme.colors.textPrimary
+                        )
+                    }
+                }
             )
         }
     ) { paddingValues ->
@@ -143,15 +157,13 @@ private fun SuccessContent(
     onNavigateToTransactionDetail: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = state.isRefreshing,
-        onRefresh = { onEvent(InboxUiEvent.OnRefresh) }
-    )
+    val pullToRefreshState = rememberPullToRefreshState()
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .pullRefresh(pullRefreshState)
+    PullToRefreshBox(
+        state = pullToRefreshState,
+        isRefreshing = state.isRefreshing,
+        onRefresh = { onEvent(InboxUiEvent.OnRefresh) },
+        modifier = modifier.fillMaxSize()
     ) {
         if (state.transactions.isEmpty()) {
             EmptyState()
@@ -190,14 +202,6 @@ private fun SuccessContent(
                 }
             }
         }
-
-        PullRefreshIndicator(
-            refreshing = state.isRefreshing,
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter),
-            containerColor = BanygTheme.colors.surfaceDarkElevated,
-            contentColor = BanygTheme.colors.limeGreen
-        )
     }
 }
 
@@ -323,8 +327,9 @@ private fun TransactionCard(
 
     GradientCard(
         gradient = BanygGradients.SubtleDark,
-        onClick = onClick,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(BanygTheme.spacing.medium)
@@ -566,7 +571,8 @@ private fun InboxLoadingPreview() {
         InboxScreen(
             uiState = InboxUiState.Loading,
             onEvent = {},
-            onNavigateToTransactionDetail = {}
+            onNavigateToTransactionDetail = {},
+            onNavigateToCsvImport = {}
         )
     }
 }
@@ -581,7 +587,8 @@ private fun InboxEmptyPreview() {
                 categories = emptyList()
             ),
             onEvent = {},
-            onNavigateToTransactionDetail = {}
+            onNavigateToTransactionDetail = {},
+            onNavigateToCsvImport = {}
         )
     }
 }
@@ -594,17 +601,20 @@ private fun InboxSuccessPreview() {
             Category(
                 id = "1",
                 name = "Food",
-                groupName = "Expenses"
+                groupName = "Expenses",
+                icon = null
             ),
             Category(
                 id = "2",
                 name = "Transportation",
-                groupName = "Expenses"
+                groupName = "Expenses",
+                icon = null
             ),
             Category(
                 id = "3",
                 name = "Shopping",
-                groupName = "Expenses"
+                groupName = "Expenses",
+                icon = null
             )
         )
 
@@ -660,7 +670,8 @@ private fun InboxSuccessPreview() {
                 categories = sampleCategories
             ),
             onEvent = {},
-            onNavigateToTransactionDetail = {}
+            onNavigateToTransactionDetail = {},
+            onNavigateToCsvImport = {}
         )
     }
 }
@@ -675,7 +686,8 @@ private fun InboxErrorPreview() {
                 canRetry = true
             ),
             onEvent = {},
-            onNavigateToTransactionDetail = {}
+            onNavigateToTransactionDetail = {},
+            onNavigateToCsvImport = {}
         )
     }
 }
