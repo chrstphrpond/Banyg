@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(tree:*)",
+      "mcp__plugin_figma_figma__whoami",
+      "mcp__plugin_figma_figma__get_screenshot",
+      "Bash(cat:*)",
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp list:*)",
+      "Bash(./gradlew :core:domain:test:*)",
+      "Bash(./gradlew:*)",
+      "Bash(git init:*)",
+      "Bash(chmod:*)"
+    ]
+  }
+}

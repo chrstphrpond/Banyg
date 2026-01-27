@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Disable specific checks that are too strict for early development -->
+    <issue id="ObsoleteLintCustomCheck" severity="warning" />
+    <issue id="IconMissingDensityFolder" severity="warning" />
+    <issue id="IconDensities" severity="warning" />
+
+    <!-- Money safety checks - treat as errors -->
+    <issue id="FloatingPointLiteralPrecision" severity="error" />
+
+    <!-- Performance -->
+    <issue id="Overdraw" severity="warning" />
+    <issue id="UnusedResources" severity="warning" />
+
+    <!-- Security -->
+    <issue id="HardcodedText" severity="warning" />
+    <issue id="SetJavaScriptEnabled" severity="error" />
+
+    <!-- Accessibility -->
+    <issue id="ContentDescription" severity="warning" />
+    <issue id="LabelFor" severity="warning" />
+</lint>

@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": {
+      "Edit": [
+        {
+          "command": "bash",
+          "args": [
+            "-c",
+            "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'amount.*Double|amount.*Float|amountMinor.*toDouble|amountMinor.*toFloat'; then echo 'ERROR: Float/Double detected in money context. Use Long for amountMinor.'; exit 1; fi"
+          ],
+          "description": "Block Float/Double in money operations"
+        }
+      ],
+      "Write": [
+        {
+          "command": "bash",
+          "args": [
+            "-c",
+            "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'amount.*Double|amount.*Float|amountMinor.*toDouble|amountMinor.*toFloat'; then echo 'ERROR: Float/Double detected in money context. Use Long for amountMinor.'; exit 1; fi"
+          ],
+          "description": "Block Float/Double in money operations"
+        }
+      ]
+    }
+  }
+}
