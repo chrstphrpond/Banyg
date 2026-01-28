@@ -16,37 +16,37 @@ Local-first personal finance OS for Android. Track spending, manage budgets, and
 
 ## Screenshots
 
-*(Coming soon)*
+*Coming soon*
 
 ## Architecture
 
 Banyg follows **Clean Architecture** with feature modules:
 
 ```
-app/                        # Main application module
-├── src/main/kotlin/        # Application code, navigation, DI
-
-core/domain/                # Pure Kotlin domain layer
-├── model/                  # Domain models (no Android deps)
-├── repository/             # Repository interfaces
-└── usecase/                # Business logic
-
-core/data/                  # Data layer
-├── local/entity/           # Room entities
-├── local/dao/              # Room DAOs
-├── repository/             # Repository implementations
-└── mapper/                 # Entity ↔ Domain mappers
-
-core/ui/                    # Shared UI components
-├── theme/                  # Material 3 theme
-└── components/             # Reusable composables
-
-feature/inbox/              # Inbox feature module
-feature/accounts/           # Accounts feature module
-feature/budget/             # Budget feature module
-feature/reports/            # Reports feature module
-feature/csvimport/          # CSV import feature module
-feature/categories/         # Categories feature module
+app/                          # Main application module
+├── src/main/kotlin/          # Application code, navigation, DI
+│
+core/domain/                  # Pure Kotlin domain layer
+├── model/                    # Domain models (no Android deps)
+├── repository/               # Repository interfaces
+└── usecase/                  # Business logic
+│
+core/data/                    # Data layer
+├── local/entity/             # Room entities
+├── local/dao/                # Room DAOs
+├── repository/               # Repository implementations
+└── mapper/                   # Entity ↔ Domain mappers
+│
+core/ui/                      # Shared UI components
+├── theme/                    # Material 3 theme
+└── components/               # Reusable composables
+│
+feature/inbox/                # Inbox feature module
+feature/accounts/             # Accounts feature module
+feature/budget/               # Budget feature module
+feature/reports/              # Reports feature module
+feature/csvimport/            # CSV import feature module
+feature/categories/           # Categories feature module
 ```
 
 ### Module Dependencies
@@ -61,22 +61,27 @@ core:data
 └─ core:domain
 ```
 
-**Strict rules:**
-- `core/domain` has ZERO Android imports
-- Repository interfaces in `core/domain/repository`
-- Repository implementations in `core/data/repository`
-- ViewModels use `core/domain` types, never Room entities
-- Composables never import Room or DataStore
+### Architecture Rules
+
+| Rule | Description |
+|------|-------------|
+| `core/domain` | ZERO Android imports - pure Kotlin |
+| Repository interfaces | Located in `core/domain/repository` |
+| Repository implementations | Located in `core:data/repository` |
+| ViewModels | Use `core/domain` types, never Room entities |
+| Composables | Never import Room or DataStore |
 
 ## Tech Stack
 
-- **Kotlin** - Primary language
-- **Jetpack Compose** - UI framework (Material 3)
-- **Hilt** - Dependency injection
-- **Room** - Local database (SQLite)
-- **DataStore** - Preferences storage
-- **Coroutines & Flow** - Async operations
-- **Navigation Compose** - Navigation
+| Technology | Purpose |
+|------------|---------|
+| **Kotlin** | Primary language |
+| **Jetpack Compose** | UI framework (Material 3) |
+| **Hilt** | Dependency injection |
+| **Room** | Local database (SQLite) |
+| **DataStore** | Preferences storage |
+| **Coroutines & Flow** | Async operations |
+| **Navigation Compose** | Navigation |
 
 ## Build Instructions
 
@@ -95,7 +100,7 @@ core:data
 # Build debug APK
 ./gradlew :app:assembleDebug
 
-# Run unit tests
+# Run all unit tests
 ./gradlew test
 
 # Run instrumented tests
@@ -105,6 +110,9 @@ core:data
 ./gradlew :core:domain:test
 ./gradlew :core:data:test
 ./gradlew :feature:inbox:test
+./gradlew :feature:budget:test
+./gradlew :feature:reports:test
+./gradlew :feature:csvimport:test
 
 # Run linter
 ./gradlew lint
@@ -115,7 +123,12 @@ core:data
 1. Open the project in Android Studio
 2. Sync Gradle files
 3. Select a device or emulator
-4. Click Run (or `./gradlew :app:installDebug`)
+4. Click Run (or press `Shift+F10`)
+
+Or use command line:
+```bash
+./gradlew :app:installDebug
+```
 
 ## Testing
 
@@ -131,6 +144,8 @@ core:data
 # Feature module tests
 ./gradlew :feature:inbox:test
 ./gradlew :feature:budget:test
+./gradlew :feature:reports:test
+./gradlew :feature:csvimport:test
 ```
 
 ### Instrumented Tests
@@ -150,9 +165,20 @@ core:data
 ./gradlew :core:domain:test --tests "*add*"
 ```
 
+### Test Coverage
+
+| Module | Tests |
+|--------|-------|
+| BudgetViewModel | 20 tests |
+| ReportsViewModel | 22 tests |
+| CsvImportViewModel | 16 tests |
+| InboxViewModel | 16 tests |
+| **Total** | **74 tests** |
+
 ## Money Safety
 
-**Critical:** All money amounts MUST be stored as `Long` (minor units/centavos). Never use `Float` or `Double`.
+> **Critical:** All money amounts MUST be stored as `Long` (minor units/centavos).  
+> Never use `Float` or `Double` for financial calculations.
 
 ```kotlin
 // ✅ CORRECT
@@ -164,12 +190,12 @@ core:data
 
 See [MONEY_RULES.md](MONEY_RULES.md) for detailed rules.
 
-## User Guide
+## Documentation
 
-See [USER_GUIDE.md](USER_GUIDE.md) for end-user documentation.
+### User Documentation
+- [USER_GUIDE.md](USER_GUIDE.md) - End-user guide
 
-## Development Documentation
-
+### Development Documentation
 - [CLAUDE.md](CLAUDE.md) - Development guidelines and patterns
 - [PRD.md](PRD.md) - Product requirements
 - [DATA_MODEL.md](DATA_MODEL.md) - Database schema
@@ -179,13 +205,15 @@ See [USER_GUIDE.md](USER_GUIDE.md) for end-user documentation.
 
 ## Development Workflow
 
-Before implementing:
+### Before Implementing
+
 1. Read [CLAUDE.md](CLAUDE.md) for architecture patterns
 2. Follow money safety rules (no Float/Double for amounts)
 3. Write tests for domain logic
 4. Use Hilt for dependency injection
 
-Pre-commit checks:
+### Pre-commit Checks
+
 ```bash
 # Check for Float/Double used with money
 git grep -n "amount.*Double\|amount.*Float" -- "*.kt" | grep -v "Test.kt"
