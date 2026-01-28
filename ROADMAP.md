@@ -1,6 +1,6 @@
 # Banyg Finance OS - Development Roadmap
 
-## Current Status: UI Implementation Phase
+## Current Status: Testing & Quality Phase (Phase 4)
 
 **Completed:**
 - ✅ Core domain models (Account, Transaction, Category, Budget)
@@ -13,15 +13,30 @@
 - ✅ Build system fixed with desugaring
 - ✅ **Inbox Screen** - Full implementation with swipe actions, category chips, pull-to-refresh
 - ✅ **Add Transaction Screen** - Full implementation with form validation
+- ✅ **Budget Screen** - Full implementation with progress bars, create/edit dialogs
+- ✅ **Reports Screen** - Full implementation with spending breakdown, period selector
+- ✅ **CSV Import Screen** - Full implementation with file picker, preview, duplicate detection
+- ✅ **Navigation** - All screens integrated in NavHost
 
-**Remaining:**
-- 🔄 Budget Screen implementation (placeholder → full UI)
-- 🔄 Reports Screen implementation (placeholder → full UI)
-- 🔄 CSV Import UI (feature module + screens)
+**Remaining (Phase 4 - Testing):**
+- 🔄 ReportsViewModel tests
+- 🔄 CsvImportViewModel tests  
+- 🔄 InboxViewModel tests
+- 🔄 Integration tests for CSV edge cases
+
+**Remaining (Phase 5 - Polish):**
+- 🔄 Error handling improvements
+- 🔄 State management (process death restoration)
+- 🔄 Accessibility (content descriptions, TalkBack)
+
+**Remaining (Phase 6 - Cleanup):**
+- 🔄 Remove duplicate folder structures
+- 🔄 Documentation updates
+- 🔄 Release preparation
 
 ---
 
-## Phase 1: Build Stabilization 🟢 COMPLETE
+## Phase 1: Build Stabilization ✅ COMPLETE
 
 **Goal:** Fix compilation errors and ensure stable builds
 
@@ -42,7 +57,7 @@
 
 ---
 
-## Phase 2: UI Integration 🟡 IN PROGRESS
+## Phase 2: UI Integration ✅ COMPLETE
 
 **Goal:** Connect ViewModels to UI screens
 
@@ -67,23 +82,23 @@
 - [x] Loading and error states
 
 ### 2.3 Budget Feature ✅ COMPLETE
-- [ ] Update `BudgetScreen.kt` to use `BudgetViewModel`
-- [ ] Create budget list with progress bars
-- [ ] Add "Create Budget" bottom sheet/dialog
-- [ ] Show budgeted/spent/remaining for each category
-- [ ] Color-code budgets (green/yellow/red based on progress)
-- [ ] Add monthly period selector
-- [ ] Add empty state
-- [ ] Add loading/error states
+- [x] Update `BudgetScreen.kt` to use `BudgetViewModel`
+- [x] Create budget list with progress bars
+- [x] Add "Create Budget" bottom sheet/dialog
+- [x] Show budgeted/spent/remaining for each category
+- [x] Color-code budgets (green/yellow/red based on progress)
+- [x] Add monthly period selector
+- [x] Add empty state
+- [x] Add loading/error states
 
 ### 2.4 Reports Feature ✅ COMPLETE
-- [ ] Update `ReportsScreen.kt` to use `ReportsViewModel`
-- [ ] Create spending by category list
-- [ ] Add period selector (This Month, Last Month, etc.)
-- [ ] Add percentage bars for category breakdown
-- [ ] Add income vs expense summary
-- [ ] Add empty state
-- [ ] Add loading/error states
+- [x] Update `ReportsScreen.kt` to use `ReportsViewModel`
+- [x] Create spending by category list
+- [x] Add period selector (This Month, Last Month, etc.)
+- [x] Add percentage bars for category breakdown
+- [x] Add income vs expense summary
+- [x] Add empty state
+- [x] Add loading/error states
 
 **Estimated Effort:** 6-8 hours remaining
 **Dependencies:** None
@@ -91,7 +106,7 @@
 
 ---
 
-## Phase 3: CSV Import UI ✅ COMPLETE (MVP)
+## Phase 3: CSV Import UI ✅ COMPLETE
 
 **Goal:** Build user interface for CSV import (MVP critical feature)
 
@@ -126,9 +141,9 @@
 - [x] Error handling with skipped rows
 - [x] Navigate back to Inbox after import
 
-### 3.6 Navigation 🟡
-- [ ] Add CSV Import to navigation graph
-- [ ] Add menu item/button in Inbox screen
+### 3.6 Navigation ✅
+- [x] Add CSV Import to navigation graph
+- [x] Add menu item/button in Inbox screen
 
 **Estimated Effort:** 6-8 hours
 **Dependencies:** Phase 2 UI patterns established
@@ -136,12 +151,15 @@
 
 ---
 
-## Phase 4: Testing & Quality 🟡 HIGH
+## Phase 4: Testing & Quality 🟡 IN PROGRESS
 
 **Goal:** Comprehensive testing and bug fixes
 
 ### 4.1 Unit Tests
-- [ ] Add tests for ViewModels (Budget, Reports)
+- [x] Add tests for BudgetViewModel
+- [ ] Add tests for ReportsViewModel
+- [ ] Add tests for CsvImportViewModel
+- [ ] Add tests for InboxViewModel
 - [ ] Add tests for CSV edge cases (malformed data, empty files)
 - [ ] Add tests for budget calculations
 - [ ] Add tests for duplicate detection accuracy
@@ -239,24 +257,23 @@
 | Phase 1: Build Stabilization | 2-4 hrs | ✅ COMPLETE |
 | Phase 2: UI Integration | 6-8 hrs | ✅ COMPLETE |
 | Phase 3: CSV Import UI | 6-8 hrs | ✅ COMPLETE |
-| Phase 4: Testing | 6-8 hrs | 🟡 HIGH |
-| Phase 5: Polish | 4-6 hrs | 🟢 MEDIUM |
-| Phase 6: Cleanup | 2-4 hrs | 🟢 LOW |
+| Phase 4: Testing | 6-8 hrs | 🟡 IN PROGRESS |
+| Phase 5: Polish | 4-6 hrs | 🟢 PENDING |
+| Phase 6: Cleanup | 2-4 hrs | 🟢 PENDING |
 
-**Total Remaining Effort:** 20-34 hours (3-5 days of focused work)
+**Total Remaining Effort:** 12-18 hours (2-3 days of focused work)
 
 ---
 
 ## Immediate Priorities
 
 ### This Week
-1. **Budget Screen** (Phase 2.3) - Complete the placeholder
-2. **Reports Screen** (Phase 2.4) - Complete the placeholder
-3. **CSV Import Module** (Phase 3) - MVP critical feature
+1. **ViewModel Tests** (Phase 4.1) - Reports, CsvImport, Inbox
+2. **Integration Tests** (Phase 4.2) - CSV edge cases
 
 ### Next Week
-4. **Testing** (Phase 4)
-5. **Polish** (Phase 5)
+3. **Polish** (Phase 5) - Error handling, state management, accessibility
+4. **Cleanup** (Phase 6) - Documentation, release prep
 
 ---
 
@@ -274,11 +291,11 @@
 
 - [x] User can add transaction (3 taps or less)
 - [x] User can categorize transactions in inbox
-- [ ] User can set monthly budgets per category
-- [ ] User can see budget progress
-- [ ] User can import CSV bank statements
-- [ ] User can see spending reports
-- [ ] App works offline completely
+- [x] User can set monthly budgets per category
+- [x] User can see budget progress
+- [x] User can import CSV bank statements
+- [x] User can see spending reports
+- [x] App works offline completely
 - [x] All money calculations use Long (no Float/Double)
 - [ ] Build passes with tests
 - [ ] No critical bugs
